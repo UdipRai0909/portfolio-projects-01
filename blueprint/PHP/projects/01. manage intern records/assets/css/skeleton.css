@@ -1,0 +1,21 @@
+/* 1. Put Footer at the end, make content in the middle of the page */
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+nav-beginning {
+}
+
+.content-middle {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.footer-end {
+  flex: 0;
+}
+/* / 1. Put Footer at the end, make content in the middle of the page */

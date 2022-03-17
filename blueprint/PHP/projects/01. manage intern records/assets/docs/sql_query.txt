@@ -1,0 +1,42 @@
+SHOW DATABASES;
+
+CREATE DATABASE attendance_hackathon;
+# CREATE DATABASE attendance_hacka;
+
+USE attendance_hackathon;
+# USE attendance_hacka;
+
+CREATE TABLE attendees (
+  attendee_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  first_name VARCHAR(100) NOT NULL, 
+  last_name VARCHAR(100) NOT NULL, 
+  avatar_path VARCHAR(255), 
+  date_of_birth DATE NOT NULL, 
+  email_address VARCHAR(255) NOT NULL, 
+  phone INT(15) NOT NULL
+) ENGINE=INNODB;
+
+CREATE TABLE specialities (
+ speciality_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+ name VARCHAR(100) NOT NULL
+) ENGINE=INNODB;
+
+ALTER TABLE attendees
+ADD COLUMN speciality_id INT UNSIGNED,
+ADD CONSTRAINT fk_speciality01_id
+FOREIGN KEY(speciality_id)
+REFERENCES specialities(speciality_id)
+ON DELETE CASCADE;
+
+INSERT INTO specialities(name) VALUES("Frontend Developer"),
+("Backend Developer"),
+("Fullstack Developer"),
+("Data Scientist"),
+("Software Developer"),
+("Data Engineer");
+
+CREATE TABLE users (
+ user_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+ username VARCHAR(100) NOT NULL,
+ password VARCHAR(255) NOT NULL
+) ENGINE=INNODB;

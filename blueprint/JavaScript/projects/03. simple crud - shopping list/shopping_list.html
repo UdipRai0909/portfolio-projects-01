@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Shopping List</title>
+ <link rel="stylesheet" href="shopping_list.css" class="href">
+</head>
+
+<body>
+ <h1>Simple CRUD - Shopping List</h1>
+
+ <form action="javascript:void(0)" method="POST" onsubmit="app.add()">
+  <legend>Add an item (fruits/veggies/stuff)</legend>
+  <input type="text" id="add-item" placeholder="Insert an item.." />
+  <input type="submit" value="Add" />
+ </form>
+
+ <div id="spoiler" role="aria-hidden">
+  <form action="javascript:void(0)" method="POST" id="saveEdit">
+   <br />
+   <legend>Edit an item (fruits/veggies/stuff)</legend>
+   <input type=" text" id="edit-item" />
+   <input type="submit" value="Edit" />
+   <a onclick="closeInput()" aria-hidden="Close">&#10006;</a>
+ </div>
+ </form>
+
+ <hr />
+
+ <p id="counter"></p>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Item</th>
+    <th>Action</th>
+   </tr>
+  </thead>
+  <tbody id="foodItems">
+  </tbody>
+ </table>
+
+ <hr />
+
+ <script src="shopping_list.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+/* Resizing avatar without losing quality */
+/* .resize-table-avatar {
+  width: 40px;
+  height: auto;
+}
+
+.resize-table-avatar {
+  width: auto;
+  height: 40px;
+} */
+
+img.table-avatar-pic {
+  vertical-align: middle;
+  border-style: none;
+  width: 100%;
+  height: 55px;
+  max-width: 55px;
+  border-radius: 100%;
+}
+
+img.modify-avatar-pic {
+  vertical-align: middle;
+  height: 10rem;
+}

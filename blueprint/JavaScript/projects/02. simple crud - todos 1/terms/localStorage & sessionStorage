@@ -1,0 +1,44 @@
+localStorage & sessionStorage
+https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
+
+What is localStorage in JavaScript?
+A property that allows JavaScript sites and apps to save key-value pairs in a web browser with no expiration date.
+
+This means the data stored in the browser will persist even after the browser window is closed.
+
+Note
+The sessionStorage object stores data for only one session.
+(The data is deleted when the browser is closed).
+
+localStorage and sessionStorage both work in the same fashion.
+
+Set and retrieve localStorage name/value pair:
+
+localStorage.setItem("lastname", "Smith");
+localStorage.getItem("lastname");
+
+Syntax
+window.localStorage
+
+or just:
+localStorage
+
+SAVE data to localStorage:
+localStorage.setItem(key, value);
+
+READ data from localStorage:
+let lastname = localStorage.getItem(key);
+
+REMOVE data from localStorage:
+localStorage.removeItem(key);
+
+CLEAR localStorage:
+localStorage.removeItem(key);
+
+Count the number of times a user has clicked a button:
+
+if (localStorage.clickcount) {
+  localStorage.clickcount = Number(localStorage.clickcount) + 1;
+} else {
+  localStorage.clickcount = 1;
+}

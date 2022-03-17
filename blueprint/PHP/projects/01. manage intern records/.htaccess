@@ -1,0 +1,7 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+# RewriteRule ^phpLesson61/([0-9]+)/([0-9a-zA-Z_-]+) phpLesson61.php?id=$1&name=$2[NC, L]

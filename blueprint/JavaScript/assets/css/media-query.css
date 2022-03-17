@@ -1,0 +1,7 @@
+/* If screen size is more than 991px wide, set the font-size of <div> to 80px */
+@media screen and (min-width: 991px) {
+}
+
+/* If screen size is 991px wide, or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 991px) {
+}

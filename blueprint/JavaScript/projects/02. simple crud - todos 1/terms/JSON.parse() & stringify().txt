@@ -1,0 +1,86 @@
+JSON.parse() & stringify()
+https://javascript.plainenglish.io/how-to-use-stringify-and-parse-in-javascript-6b637b571a32
+
+JavaScript has two useful methods to deal with JSON-formatted content: JSON.stringify() & JSON.parse(), which are useful to learn as a pair.
+JSON.stringify() takes a JavaScript object and then transforms it into a JSON string.
+JSON.parse() takes a JSON string and then transforms it into a JavaScript object.
+
+
+const myObject = {
+  dog: "🐕",
+  cat: "🐈",
+  koala: "🐨",
+  count: 3
+};
+
+console.log(JSON.stringify(myObject));
+// result: {"dog":"🐕","cat":"🐈","koala":"🐨","count":3}
+
+console.log(JSON.parse(JSON.stringify(myObject)));
+// result: Object {dog: "🐕", cat: "🐈", koala: "🐨", count: 3}
+
+JSON.stringify() can take additional arguments, a replacer function and a string or number to use as a “space” in the returned string.
+That means the replacer argument can be used to filter out values if you return undefined, as shown in the following example:
+
+const user = {
+  id: 101010,
+  name: "Derek",
+  email: "derek@awesome.com"
+};
+
+function replacer(key, value) {
+  if (typeof value === "number") {
+    return undefined;
+  }
+  if (key === "email") {
+    return "Removed for privacy";
+  }
+  return value;
+}
+
+console.log(JSON.stringify(user));
+// result: {"id":101010,"name":"Derek","email":"derek@awesome.com"}
+
+console.log(JSON.stringify(user, replacer));
+// {"name":"Derek","email":"Removed for privacy"}
+
+console.log(JSON.stringify(user, null, "^_^ "));
+// result: {
+// ^_^ "id": 101010,
+// ^_^ "name": "Derek",
+// ^_^ "email": "derek@awesome.com"
+// }
+
+console.log(JSON.parse(JSON.stringify(user)));
+// result: Object {id: 101010, name: "Derek", email: "derek@awesome.com"}
+
+Can JSON.parse and JSON.stringify be used to deep copy objects?
+Afrequent code example in discussions of deep cloning in JavaScript is wrapping JSON.parse around JSON.stringify to make a deep copy of an array or object — meaning deeply nested arrays or objects will be copied.
+However, be careful with this method, as it will not work for many data types, including undefined, Date objects, RegExp objects, and Infinity:
+
+
+// Note that only certain primitives will be deep copied when using JSON.parse() followed by JSON.stringify()
+const mySampleObject = {
+  string: 'a string',
+  number: 37,
+  boolean: true,
+  nullValue: null,
+  notANumber: NaN, // NaN values will be lost (the value will be forced to 'null')
+  dateObject: new Date('2019-12-31T23:59:59'),  // Date will get stringified
+  undefinedValue: undefined,  // Undefined values will be completely lost, including the key containing the undefined value
+  infinityValue: Infinity,  // Infinity will be lost (the value will be forced to 'null')
+  regExpObject: /.*/, // RegExp will be lost (the value will be forced to an empty object {})
+}
+
+console.log(mySampleObject) // Object { string: "a string", number: 37, boolean: true, nullValue: null, notANumber: NaN, dateObject: Date Tue Dec 31 2019 23:59:59 GMT-0500 (Eastern Standard Time), undefinedValue: undefined, infinityValue: Infinity, regExpObject: /.*/ }
+console.log(typeof mySampleObject.dateObject) // object
+
+const faultyDeepClone = JSON.parse(JSON.stringify(mySampleObject))
+
+console.log(faultyDeepClone) // Object { string: "a string", number: 37, boolean: true, nullValue: null, notANumber: null, dateObject: "2020-01-01T04:59:59.000Z", infinityValue: null, regExpObject: {} }
+
+// The Date object has been stringified, the result of .toISOString()
+console.log(typeof faultyDeepClone.dateObject) // string
+
+If you are sure your deeply nested data only includes strings, numbers, boolean, and null, then yes you can use parse & stringify to deep copy.
+But a more-reliable way to deep copy objects and arrays in JavaScript is using a custom function or a helper library, such as rfdc

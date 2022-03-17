@@ -1,0 +1,160 @@
+bubbling
+https://javascript.info/bubbling-and-capturing
+
+Bubbling and capturing
+Let’s start with an example.
+
+This handler is assigned to <div>, but also runs if you click any nested tag like <em> or <code>:
+
+<div onclick="alert('The handler!')">
+  <em>If you click on <code>EM</code>, the handler on <code>DIV</code> runs.</em>
+</div>
+
+Isn’t it a bit strange? Why does the handler on <div> run if the actual click was on <em>?
+
+
+Bubbling
+The bubbling principle is simple.
+
+When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
+
+Let’s say we have 3 nested elements FORM > DIV > P with a handler on each of them:
+
+style>
+  body * {
+    margin: 10px;
+    border: 1px solid blue;
+  }
+</style>
+
+<form onclick="alert('form')">FORM
+  <div onclick="alert('div')">DIV
+    <p onclick="alert('p')">P</p>
+  </div>
+</form>
+
+
+A click on the inner <p> first runs onclick:
+
+On that <p>.
+Then on the outer <div>.
+Then on the outer <form>.
+And so on upwards till the document object.
+
+So if we click on <p>, then we’ll see 3 alerts: p → div → form.
+The process is called “bubbling”, because events “bubble” from the inner element up through parents like a bubble in the water.
+
+
+event.target
+A handler on a parent element can always get the details about where it actually happened.
+
+The most deeply nested element that caused the event is called a target element, accessible as event.target.
+
+Note the differences from this (=event.currentTarget):
+
+event.target – is the “target” element that initiated the event, it doesn’t change through the bubbling process.
+this – is the “current” element, the one that has a currently running handler on it.
+For instance, if we have a single handler form.onclick, then it can “catch” all clicks inside the form. No matter where the click happened, it bubbles up to <form> and runs the handler.
+
+In form.onclick handler:
+
+this (=event.currentTarget) is the <form> element, because the handler runs on it.
+event.target is the actual element inside the form that was clicked.
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="example.css">
+</head>
+<style>
+form {
+ background-color: green;
+ position: relative;
+ width: 150px;
+ height: 150px;
+ text-align: center;
+ cursor: pointer;
+}
+
+div {
+ background-color: blue;
+ position: absolute;
+ top: 25px;
+ left: 25px;
+ width: 100px;
+ height: 100px;
+}
+
+p {
+ background-color: red;
+ position: absolute;
+ top: 25px;
+ left: 25px;
+ width: 50px;
+ height: 50px;
+ line-height: 50px;
+ margin: 0;
+}
+
+body {
+ line-height: 25px;
+ font-size: 16px;
+}
+</style>
+<body>
+  A click shows both <code>event.target</code> and <code>this</code> to compare:
+
+  <form id="form">FORM
+    <div>DIV
+      <p>P</p>
+    </div>
+  </form>
+
+  <script>
+  form.onclick = function(event) {
+   event.target.style.backgroundColor = 'yellow';
+ 
+   // chrome needs some time to paint yellow
+   setTimeout(() => {
+     alert("target = " + event.target.tagName + ", this=" + this.tagName);
+     event.target.style.backgroundColor = ''
+   }, 0);
+ };
+ </script>
+</body>
+</html>
+
+
+Stopping bubbling
+A bubbling event goes from the target element straight up. Normally it goes upwards till <html>, and then to document object, and some events even reach window, calling all handlers on the path.
+
+But any handler may decide that the event has been fully processed and stop the bubbling.
+
+The method for it is event.stopPropagation().
+
+For instance, here body.onclick doesn’t work if you click on <button>:
+
+<body onclick="alert(`the bubbling doesn't reach here`)">
+  <button onclick="event.stopPropagation()">Click me</button>
+</body>
+
+event.stopImmediatePropagation()
+If an element has multiple event handlers on a single event, then even if one of them stops the bubbling, the other ones still execute.
+
+In other words, event.stopPropagation() stops the move upwards, but on the current element all other handlers will run.
+
+To stop the bubbling and prevent handlers on the current element from running, there’s a method event.stopImmediatePropagation(). After it no other handlers execute.
+
+Don’t stop bubbling without a need!
+Bubbling is convenient. Don’t stop it without a real need: obvious and architecturally well thought out.
+
+Sometimes event.stopPropagation() creates hidden pitfalls that later may become problems.
+
+For instance:
+
+We create a nested menu. Each submenu handles clicks on its elements and calls stopPropagation so that the outer menu won’t trigger.
+Later we decide to catch clicks on the whole window, to track users’ behavior (where people click). Some analytic systems do that. Usually the code uses document.addEventListener('click'…) to catch all clicks.
+Our analytic won’t work over the area where clicks are stopped by stopPropagation. Sadly, we’ve got a “dead zone”.
+There’s usually no real need to prevent the bubbling. A task that seemingly requires that may be solved by other means. One of them is to use custom events, we’ll cover them later. Also we can write our data into the event object in one handler and read it in another one, so we can pass to handlers on parents information about the processing below.

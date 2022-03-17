@@ -1,0 +1,91 @@
+/* Navbar CSS */
+.navbar a.navbar-brand {
+  font-family: "Permanent Marker", cursive;
+}
+
+.navbar li.nav-item a {
+  margin-left: 3rem;
+  font-family: "Bangers", cursive;
+  font-size: 1.6rem;
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+.navbar li.nav-item a:hover {
+  transition: ease-out 0.1s;
+  color: #ffffff !important;
+}
+
+/* /Navbar CSS */
+
+/* Colors */
+.navbar li.nav-item .color-php {
+  color: #54ecff !important;
+}
+
+.navbar li.nav-item .color-java {
+  color: #ff9800 !important;
+}
+
+.navbar li.nav-item .color-js {
+  color: #f289ff !important;
+}
+
+.navbar li.nav-item .color-python {
+  color: #ffff00 !important;
+}
+/* /Colors */
+
+/* Footer to stay in the buttom always */
+/* Trick: */
+/* body {
+  height: 100vh;
+  margin: 0;
+}
+
+header {
+  min-height: 50px;
+  background: lightcyan; 
+}
+footer {
+  min-height: 75px;
+  background: PapayaWhip;
+} */
+
+/* Trick */
+/* body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+} */
+
+/* Footer Fonts */
+span.copyright,
+span.chad {
+  font-family: "Bangers", cursive;
+  font-size: 1.3rem !important;
+}
+
+.container {
+  max-width: 2500px !important;
+}
+
+h1.page-title,
+h5.page-title {
+  padding: 0.5rem 0;
+  background: -webkit-linear-gradient(#ff0000, #000000bf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Center the elements of an html table */
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  vertical-align: middle;
+}
