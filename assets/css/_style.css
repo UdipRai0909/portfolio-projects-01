@@ -144,7 +144,7 @@
 #udip-header .display-tc .gradient-border {
   --borderWidth: 6px;
 }
-a.scroll-link.gradient-border {
+.navbar-nav .gradient-border {
   --borderWidth: 0.1px !important;
 }
 #udip-header .display-tc .gradient-border:after {
@@ -349,7 +349,7 @@ a.scroll-link.gradient-border {
   background: #293e6c;
 }
 .udip-heading {
-  margin-bottom: 5em;
+  margin-bottom: 1em;
 }
 .udip-heading.udip-heading-sm {
   margin-bottom: 2em;
